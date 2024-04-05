@@ -1,4 +1,4 @@
-import User from "../models/User.mjs";
+import User from "../model/User.js";
 import bcrypt from "bcrypt";
 import dontenv from "dotenv";
 dontenv.config();
@@ -17,8 +17,7 @@ export const userRegister = async (req, res) => {
         .status(400)
         .json({ error: "User with this email already exists" });
     }
-    const salt = bcrypt.genSalt(10);
-    const hashedpassword = await bcrypt.hash(password, salt);
+    const hashedpassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       name,
       password: hashedpassword,
@@ -28,7 +27,7 @@ export const userRegister = async (req, res) => {
     await newUser.save();
     const payload = {
       user: {
-        id: user._id,
+        id: newUser._id,
       },
     };
     const token = jwt.sign(payload, process.env.MONGO_URI);
