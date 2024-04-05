@@ -10,10 +10,10 @@ const Navbar = () => {
       </div>
       <ul className="navbar-links">
         {/* Navigation links */}
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/services">Services</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li><a href="/" style={{color:"black"}}>Home</a></li>
+        <li><a href="/about" style={{color:"black"}}>About</a></li>
+        <li><a href="/services" style={{color:"black"}}>Services</a></li>
+        <li><a href="/contact" style={{color:"black"}}>Contact</a></li>
       </ul>
     </nav>
   );
