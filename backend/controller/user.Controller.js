@@ -1,4 +1,4 @@
-import User from "../models/User.mjs";
+import User from "../model/User.js";
 import bcrypt from "bcrypt";
 import dontenv from "dotenv";
 dontenv.config();
@@ -17,8 +17,7 @@ export const userRegister = async (req, res) => {
         .status(400)
         .json({ error: "User with this email already exists" });
     }
-    const salt = bcrypt.genSalt(10);
-    const hashedpassword = await bcrypt.hash(password, salt);
+    const hashedpassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       name,
       password: hashedpassword,
@@ -28,7 +27,7 @@ export const userRegister = async (req, res) => {
     await newUser.save();
     const payload = {
       user: {
-        id: user._id,
+        id: newUser._id,
       },
     };
     const token = jwt.sign(payload, process.env.MONGO_URI);
@@ -61,5 +60,29 @@ export const userLogin = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
+  }
+};
+
+export const createBooking = async(req,res)=>{
+  try {
+    const { userId, driverId, pickupLocation, destination, fare, vehicleType } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const newBooking = new Booking({
+      user: userId,
+      driver: driverId,
+      pickupLocation: pickupLocation,
+      destination: destination,
+      fare,
+      vehicleType: vehicleType,
+      status: 'pending'
+    });
+    await newBooking.save();
+    res.status(201).json(newBooking);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
