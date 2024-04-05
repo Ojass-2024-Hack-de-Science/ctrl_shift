@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './signup.css';
 
@@ -41,9 +42,20 @@ export const Signup = () => {
 
     return (
         <div className='main-container'>
-            <div className='left-container'>ksdbvc</div>
+            <div className='left-container'>
+            <figure>
+                <blockquote class="blockquote">
+                    <h1 className="h1 display-1" id='companyname'>ParkIt</h1>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                <h1 class="display-6" id='compar'>Your Friendly Neighbourhood Valet</h1>
+                </figcaption>
+            </figure>
+            </div>
             <div className='right-container'>
-                <form onSubmit={handleSubmit}>
+            <div class="right">
+            <h1 className="h1 display-1" id='head'>Create Your Account</h1>
+            <form onSubmit={handleSubmit} class>
                     <div>
                         <input
                             className='inputbox'
@@ -99,8 +111,10 @@ export const Signup = () => {
                             required
                         />
                     </div>
-                    <button className='submit' type="submit">Sign Up</button>
+                    <button className='submit' type="submit">Register</button>
                 </form>
+                <label class="form-check-label" id='lasttext'>Already Registered to ParkIt?<Link to={'/login'}>Sign In</Link></label>
+            </div>     
             </div>
         </div>
     );
