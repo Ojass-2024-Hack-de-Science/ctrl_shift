@@ -1,0 +1,55 @@
+.main-container{
+    background-color: aqua;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    
+
+}
+
+.left-container{
+    width: 101vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+}
+.right-container{
+    width: 101vh;
+    height: 90vh;
+    background-color: red;
+   display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.inputbox{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    width: 400px;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.submit{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    width: 410px;
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+    height: 50px;
+    background-color: black;
+    color: beige;
+    font-size: 18px;
+    font-weight: bolder;
+
+}
