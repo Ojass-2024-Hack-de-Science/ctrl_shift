@@ -48,6 +48,9 @@ export const Signup = () => {
                     <h1 className="h1 display-1" id='companyname'>ParkIt</h1>
                 </blockquote>
                 <figcaption class="blockquote-footer">
+                    <br />
+                    <br />
+                    <br />
                 <h1 class="display-6" id='compar'>Your Friendly Neighbourhood Valet</h1>
                 </figcaption>
             </figure>

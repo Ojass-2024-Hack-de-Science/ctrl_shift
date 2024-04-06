@@ -1,6 +1,7 @@
 import User from "../model/User.js";
 import bcrypt from "bcrypt";
 import dontenv from "dotenv";
+import jwt from "jsonwebtoken"
 dontenv.config();
 export const userRegister = async (req, res) => {
   try {
@@ -30,7 +31,7 @@ export const userRegister = async (req, res) => {
         id: newUser._id,
       },
     };
-    const token = jwt.sign(payload, process.env.MONGO_URI);
+    const token = jwt.sign(payload, process.env.JWTSECRET);
     res.status(200).json({ token });
   } catch (err) {
     console.error(err);
@@ -41,7 +42,7 @@ export const userRegister = async (req, res) => {
 export const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email:email });
     if (!user) {
       return res
         .status(400)
@@ -55,34 +56,10 @@ export const userLogin = async (req, res) => {
         id: user._id,
       },
     };
-    const token = jwt.sign(payload, process.env.MONGO_URI);
+    const token = jwt.sign(payload, process.env.JWTSECRET);
     res.status(200).json({token});
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
-  }
-};
-
-export const createBooking = async(req,res)=>{
-  try {
-    const { userId, driverId, pickupLocation, destination, fare, vehicleType } = req.body;
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    const newBooking = new Booking({
-      user: userId,
-      driver: driverId,
-      pickupLocation: pickupLocation,
-      destination: destination,
-      fare,
-      vehicleType: vehicleType,
-      status: 'pending'
-    });
-    await newBooking.save();
-    res.status(201).json(newBooking);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
   }
 };

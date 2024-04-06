@@ -39,7 +39,7 @@ const markers = [
 
 export default function Map() {
   return (
-    <div className="container">
+    <div className="a1container">
     <MapContainer center={[48.8566, 2.3522]} zoom={13}>
       {/* OPEN STREEN MAPS TILES */}
       <TileLayer

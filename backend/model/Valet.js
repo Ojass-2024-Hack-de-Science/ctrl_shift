@@ -21,6 +21,6 @@ const driverSchema = new mongoose.Schema({
     }
 });
 
-const Driver = mongoose.model('Driver', driverSchema);
+const Driver = mongoose.model('Valet', driverSchema);
 
 export default Driver;

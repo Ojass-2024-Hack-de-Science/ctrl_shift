@@ -36,36 +36,36 @@ export const Dashboard = () => {
   ];
 
   return (
-    <div className="main-container">
-      <div className="left-container">
-        <div className="left-box">
-          <div className="image-container">
+    <div className="dbmain-container">
+      <div className="dbleft-container">
+        <div className="dbleft-box">
+          <div className="dbimage-container">
             <img src={require("../icons/Gemini_Generated_Image_y4t1jly4t1jly4t1.jpg")} alt=""/>
           </div>
           <form>
             <div>
               <input
-                className="inputbox"
+                className="dbinputbox"
                 type="text"
                 placeholder="Enter Your Car Type"
                 name="cartype"
                 required
               />
               <input
-                className="inputbox"
+                className="dbinputbox"
                 type="text"
                 placeholder="Current Location"
                 name="username"
                 required
               />
             </div>
-            <button className="submit" type="submit">
+            <button className="dbsubmit" type="submit">
               Book
             </button>
           </form>
         </div>
       </div>
-      <div className="right-container">
+      <div className="dbright-container">
         <Map />
       </div>
     </div>

@@ -1,11 +1,12 @@
-import Driver from "../model/Driver.js";
+import Driver from "../model/Valet.js";
 import bcrypt from "bcrypt";
 import dontenv from "dotenv";
+import jwt from "jsonwebtoken"
 dontenv.config();
-export const driverRegister = async (req, res) => {
+export const valetRegister = async (req, res) => {
   try {
     const { email, number, name, password } = req.body;
-    let user = await Driver.findOne({ email });
+    let user = await Driver.findOne({ email:email });
     if (user) {
       return res
         .status(400)
@@ -30,7 +31,7 @@ export const driverRegister = async (req, res) => {
         id: newDriver._id,
       },
     };
-    const token = jwt.sign(payload, process.env.MONGO_URI);
+    const token = jwt.sign(payload, process.env.JWTSECRET);
     res.status(200).json({ token });
   } catch (err) {
     console.error(err);
@@ -38,10 +39,10 @@ export const driverRegister = async (req, res) => {
   }
 };
 
-export const driverLogin = async (req, res) => {
+export const valetLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    let user = await Driver.findOne({ email });
+    let user = await Driver.findOne({ email:email });
     if (!user) {
       return res
         .status(400)
@@ -55,10 +56,28 @@ export const driverLogin = async (req, res) => {
         id: user._id,
       },
     };
-    const token = jwt.sign(payload, process.env.MONGO_URI);
+    const token = jwt.sign(payload, process.env.JWTSECRET);
     res.status(200).json({token});
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
 };
+
+export const getallvaletreq = async(req,res)=>{
+  try{
+
+  }
+  catch{
+    res.status(500).send("Internal Server Error")
+  }
+}
+
+export const valetaccept = async(req,res) =>{
+  try{
+
+  }
+  catch{
+
+  }
+}
