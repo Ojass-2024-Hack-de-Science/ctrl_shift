@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './signup.css';
 
+
 export const Signup = () => {
+    const navigate = useNavigate();            
     const [formData, setFormData] = useState({
-        username: '',
+        name: '',
         email: '',
-        phoneNumber: '',
+        number: '',
         password: '',
         confirmPassword: ''
     });
@@ -22,18 +25,20 @@ export const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
-            const response = await axios.post('/signup', formData);
+            const response = await axios.post('http://localhost:4000/api/user/register', formData);
             console.log('Signup successful:', response.data);
+            localStorage.setItem('token',response.data.token)
+            console.log(localStorage.getItem('token'));
             // Reset form fields after successful signup
             setFormData({
-                username: '',
+                name: '',
                 email: '',
-                phoneNumber: '',
+                number: '',
                 password: '',
                 confirmPassword: ''
             });
+            navigate('/dashboard')
         } catch (error) {
             console.error('Error signing up:', error);
             // Handle error scenario here
@@ -64,8 +69,8 @@ export const Signup = () => {
                             className='inputbox'
                             type="text"
                             placeholder='Full Name'
-                            name="username"
-                            value={formData.username}
+                            name="name"
+                            value={formData.name}
                             onChange={handleChange}
                             required
                         />
@@ -86,8 +91,8 @@ export const Signup = () => {
                             className='inputbox'
                             type="text"
                             placeholder='Phone Number'
-                            name="phoneNumber"
-                            value={formData.phoneNumber}
+                            name="number"
+                            value={formData.number}
                             onChange={handleChange}
                             required
                         />
