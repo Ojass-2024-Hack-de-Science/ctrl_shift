@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './signup.css';
 
 export const Login = () => {
     const [formData, setFormData] = useState({
-        username: '',
+        
         email: '',
-        phoneNumber: '',
+        
         password: '',
-        confirmPassword: ''
+        
     });
 
     const handleChange = (e) => {
