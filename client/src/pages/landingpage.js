@@ -1,6 +1,8 @@
 import React from 'react'
 import './landingpage.css'
 import { Mission } from './mission'
+import { Pricing } from './pricing'
+
 
 export const Landingpage = () => {
   return (
@@ -11,6 +13,7 @@ export const Landingpage = () => {
     <div><button className='get-started'>Get Started</button></div>
     </div>
     <Mission/>
+    <Pricing />
     </div>
     
   )
