@@ -4,8 +4,9 @@ import { Signup } from './pages/signup.js';
 import Navbar from './components/Navbar.js';
 import {Route, Routes} from 'react-router-dom'
 import { Login } from './pages/login.js';
-import { dashboard } from './pages/dashboard.js';
+import { Dashboard } from './pages/dashboard.js';
 import { Landingpage } from './pages/landingpage.js';
+import Map from './components/map.js';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
       <Routes >
       <Route path="/signup" element={<Signup/>} />
       <Route path="/login" element={<Login/>} />
-      <Route path="/dashboard" element={<dashboard/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
       <Route path="/landingpage" element={<Landingpage/>} />
+      <Route path='/map' element={<Map/>}></Route>
       </Routes>
       
     </div>
