@@ -1,13 +1,15 @@
-import React,{useState} from 'react'
-import './signup.css'
-import axios from 'axios'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import './signup.css';
 
 export const Login = () => {
-
     const [formData, setFormData] = useState({
-        
+        username: '',
         email: '',
-        password: ''
+        phoneNumber: '',
+        password: '',
+        confirmPassword: ''
     });
 
     const handleChange = (e) => {
@@ -22,15 +24,15 @@ export const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/login', formData);
+            const response = await axios.post('/signup', formData);
             console.log('Signup successful:', response.data);
             // Reset form fields after successful signup
             setFormData({
-               
+                username: '',
                 email: '',
-               
+                phoneNumber: '',
                 password: '',
-                
+                confirmPassword: ''
             });
         } catch (error) {
             console.error('Error signing up:', error);
@@ -38,44 +40,51 @@ export const Login = () => {
         }
     };
 
-  return (
-    <div className='main-container'>
-        <div className='left-container'>ksdbvc</div>
-        <div className='right-container'>
-            
-        
-        <form  onSubmit={handleSubmit}>
-            
-            <div>
-                
-                <input
-                className='inputbox'
-                    type="email"
-                    name="email"
-                    placeholder='Email'
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+    return (
+        <div className='main-container'>
+            <div className='left-container'>
+            <figure>
+                <blockquote class="blockquote">
+                    <h1 className="h1 display-1" id='companyname'>ParkIt</h1>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                <h1 class="display-6" id='compar'>Your Friendly Neighbourhood Valet</h1>
+                </figcaption>
+            </figure>
             </div>
-            
-            <div>
-                
-                <input
-                className='inputbox'
-                    type="password"
-                    name="password"
-                    placeholder='Password'
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+            <div className='right-container'>
+            <div class="right">
+            <h1 className="h1 display-1" id='head'>Welcome Back</h1>
+            <form onSubmit={handleSubmit} class>
+                    <div>
+                        <input
+                            className='inputbox'
+                            type="text"
+                            placeholder='Name'
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <input
+                            className='inputbox'
+                            type="password"
+                            name="confirmPassword"
+                            placeholder='Confirm Password'
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <button className='submit' type="submit">Sign In</button>
+                </form>
+                <label class="form-check-label" id='lasttext'>Don’t have an Account?<Link to={'/signup'}>Register Now</Link></label>
+            </div>     
             </div>
-            
-            <button className='submit' type="submit">Sign Up</button>
-        </form>
         </div>
-        
-    </div>
-  )
-}
+    );
+};
+
+export default Login;
