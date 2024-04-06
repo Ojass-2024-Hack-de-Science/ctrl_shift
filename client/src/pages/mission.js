@@ -9,9 +9,7 @@ const Navbar = () => {
     <nav className="mission">
       <div className="">
         {/* Logo or brand name */}
-        <a href="/" style={{
-        display:'flex'
-        }}>Our Mission</a>
+        Our Mission
       </div>
       
     </nav>

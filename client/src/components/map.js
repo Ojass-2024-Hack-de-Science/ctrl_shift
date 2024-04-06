@@ -2,12 +2,13 @@ import "./map.css";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import { useEffect, useState } from "react";
+import { Icon, divIcon, point, LatLng, L } from "leaflet"; // Import LatLng from leaflet
+import 'leaflet-routing-machine';
 
-import { Icon, divIcon, point } from "leaflet";
 
 // create custom icon
 const customIcon = new Icon({
-  // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
   iconUrl: require("../icons/placeholder.png"),
   iconSize: [38, 38] // size of the icon
 });
@@ -21,16 +22,9 @@ const createClusterCustomIcon = function (cluster) {
   });
 };
 
-// markers
+
+
 const markers = [
-  {
-    geocode: [48.86, 2.3522],
-    popUp: "Hello, I am pop up 1"
-  },
-  {
-    geocode: [48.85, 2.3522],
-    popUp: "Hello, I am pop up 2"
-  },
   {
     geocode: [48.855, 2.34],
     popUp: "Hello, I am pop up 3"
@@ -38,53 +32,69 @@ const markers = [
 ];
 
 export default function Map() {
+  const [userLocation, setUserLocation] = useState([]);
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const showPosition = (position) => {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    console.log("Latitude: " + latitude + " Longitude: " + longitude + "userlocation" + userLocation);
+    setUserLocation({ latitude, longitude });
+  };
+
+  const showError = (error) => {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        alert("User denied the request for Geolocation.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        alert("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        alert("The request to get user location timed out.");
+        break;
+      case error.UNKNOWN_ERROR:
+        alert("An unknown error occurred.");
+        break;
+    }
+  };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
   return (
     <div className="container">
-    <MapContainer center={[48.8566, 2.3522]} zoom={13}>
-      {/* OPEN STREEN MAPS TILES */}
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {/* WATERCOLOR CUSTOM TILES */}
-      {/* <TileLayer
-        attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
-      /> */}
-      {/* GOOGLE MAPS TILES */}
-      {/* <TileLayer
-        attribution="Google Maps"
-        // url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}" // regular
-        // url="http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}" // satellite
-        url="http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}" // terrain
-        maxZoom={20}
-        subdomains={["mt0", "mt1", "mt2", "mt3"]}
-      /> */}
-
-      <MarkerClusterGroup
-        chunkedLoading
-        iconCreateFunction={createClusterCustomIcon}
-      >
-        {/* Mapping through the markers */}
-        {markers.map((marker) => (
-          <Marker position={marker.geocode} icon={customIcon}>
-            <Popup>{marker.popUp}</Popup>
+      <MapContainer center={[22.7759834, 86.1467737]} zoom={13}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <MarkerClusterGroup
+          chunkedLoading
+          iconCreateFunction={createClusterCustomIcon}
+        >
+          {markers.map((marker, index) => (
+            <Marker key={index} position={marker.geocode} icon={customIcon}>
+              <Popup>{marker.popUp}</Popup>
+            </Marker>
+          ))}
+          <Marker position={[22.7859834, 86.1567737]} icon={customIcon}>
+            <Popup>Parking Space 1</Popup>
           </Marker>
-        ))}
-
-        {/* Hard coded markers */}
-        {/* <Marker position={[51.505, -0.09]} icon={customIcon}>
-          <Popup>This is popup 1</Popup>
-        </Marker>
-        <Marker position={[51.504, -0.1]} icon={customIcon}>
-          <Popup>This is popup 2</Popup>
-        </Marker>
-        <Marker position={[51.5, -0.09]} icon={customIcon}>
-          <Popup>This is popup 3</Popup>
-        </Marker>
-       */}
-      </MarkerClusterGroup>
-    </MapContainer>
+          {/* Add RoutingControl component */}
+          <Marker position={[22.7859834, 86.1567737]} icon={customIcon}>
+            <Popup>Parking Space 1</Popup>
+          </Marker>
+        </MarkerClusterGroup>
+      </MapContainer>
     </div>
   );
 }
